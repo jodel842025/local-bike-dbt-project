@@ -19,3 +19,105 @@ models:
               arguments:
                to: ref('stg_localbike__customers')
                field: customer_id
+      - name: store_id
+        description: "Foreign key linking the store where the customer placed the order."
+        tests:
+          - relationships:
+              name: store_id_id_foreign_key_in_stg_localbike__orders
+              arguments:
+               to: ref('stg_localbike__stores')
+               field: store_id
+      - name: staff_id
+        description: "Foreign key linking the staff registered the order."
+        tests:
+          - relationships:
+              name: staff_id_id_foreign_key_in_stg_localbike__orders
+              arguments:
+               to: ref('stg_localbike__staffs')
+               field: staff_id
+
+  - name: stg_localbike__order_items
+    description: "This model contains information about each item included in an order, including its price, quantity, and discount."
+    columns:
+      - name: order_item_id
+        description: "Primary key, unique identifier for each order item."
+        tests:
+            - unique
+            - not_null
+      - name: order_id
+        description: "Foreign key linking the order item to the corresponding order."
+        tests:
+          - relationships:
+              name: order_id_id_foreign_key_in_stg_sales_database__order_item
+              arguments:
+               to: ref('stg_localbike__orders')
+               field: order_id
+      - name: product_id
+        description: "Foreign key linking the product ordered."
+        tests:
+          - relationships:
+              name: product_id_id_foreign_key_in_stg_sales_database__order_item
+              arguments:
+               to: ref('stg_localbike__products')
+               field: product_id
+      - name: total_order_item_amount
+        description: "The total amount for this order item, calculated as (price * quantity) + shipping_cost."
+
+  - name: stg_localbike__products
+    description: "This model contains information about products"
+    columns:
+      - name: product_id
+        description: "Primary key, unique identifier for each product."
+        tests:
+            - unique
+            - not_null
+      - name: category_id
+        description: "Foreign key linking the product to the category."
+        tests:
+          - relationships:
+              name: category_id_id_foreign_key_in_stg_localbike__products
+              arguments:
+               to: ref('stg_localbike__categories')
+               field: category_id
+      - name: brand_id
+        description: "Foreign key linking the product to the category."
+        tests:
+          - relationships:
+              name: brand_id_id_foreign_key_in_stg_localbike__products
+              arguments:
+               to: ref('stg_localbike__brands')
+               field: brand_id
+
+  - name: stg_localbike__stores
+    description: "This model contains information about stores"
+    columns:
+      - name: store_id
+        description: "Primary key, unique identifier for each store."
+        tests:
+            - unique
+            - not_null
+
+  - name: stg_localbike__stocks
+    description: "This model contains information about stock for each product in each store"
+    columns:
+      - name: store_product_id
+        description: "Primary key, unique identifier for each product in each store."
+        tests:
+            - unique
+            - not_null
+      - name: product_id
+        description: "Foreign key linking the product."
+        tests:
+          - relationships:
+              name: product_id_foreign_key_in_stg_localbike__stocks
+              arguments:
+               to: ref('stg_localbike__products')
+               field: product_id
+      - name: store_id
+        description: "Foreign key linking the store."
+        tests:
+          - relationships:
+              name: store_id_foreign_key_in_stg_localbike__stocks
+              arguments:
+               to: ref('stg_localbike__stores')
+               field: store_id
