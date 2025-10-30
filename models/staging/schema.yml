@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: stg_localbike__orders
+    description: "This model contains information about orders placed by customer, including the status of each order."
+    columns:
+      - name: order_id
+        description: "Primary key, unique identifier for each order."
+        tests:
+            - unique
+            - not_null
+      - name: order_status
+        description: "The current status of the order."
+      - name: customer_id
+        description: "Foreign key linking the order to the customer who placed it."
+        tests:
+          - relationships:
+              name: customer_id_id_foreign_key_in_stg_localbike__orders
+              arguments:
+               to: ref('stg_localbike__customers')
+               field: customer_id
