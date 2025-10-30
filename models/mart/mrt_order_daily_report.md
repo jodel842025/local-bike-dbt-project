@@ -1,4 +1,4 @@
-{% docs int_sales_database__order %}
+{% docs mrt_order_daily_report %}
 
 This model provides a daily aggregation of sales by customers, products, store and staff details:
 
