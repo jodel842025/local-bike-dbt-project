@@ -8,7 +8,6 @@ select
     s.store_name,
     s.store_state,
     st.staff_name,
-    count(distinct oi.order_id) as total_orders,
     sum(oi.quantity) total_sales_quantity,
     round(sum(oi.total_order_item_amount),2) total_sales_amount
 
